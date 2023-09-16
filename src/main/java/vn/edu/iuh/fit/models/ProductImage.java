@@ -2,41 +2,30 @@ package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 @Entity
-@Table(name = "product_image ")
-@IdClass(ProductImage.ProductImagePK.class)
+@Table(name = "product_image")
 public class ProductImage {
     @Id
-    private long product_id;
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "image_id")
     private long image_id;
-    @Column(length = 250, nullable = false)
+    /*@Column(name = "product_id")
+    private long product_id;*/
+    @Column(name = "path", length = 250, nullable = false)
     private String path;
-    @Column(length = 250)
+    @Column(name = "alternative", length = 250)
     private String alternative;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public ProductImage() {
     }
 
-    public ProductImage(long product_id, String path, String alternative) {
-        this.product_id = product_id;
+    public ProductImage(String path, String alternative) {
         this.path = path;
         this.alternative = alternative;
-    }
-
-    public long getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(long product_id) {
-        this.product_id = product_id;
     }
 
     public long getImage_id() {
@@ -46,6 +35,7 @@ public class ProductImage {
     public void setImage_id(long image_id) {
         this.image_id = image_id;
     }
+
 
     public String getPath() {
         return path;
@@ -63,64 +53,21 @@ public class ProductImage {
         this.alternative = alternative;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
         return "ProductImage{" +
-                "product_id=" + product_id +
-                ", image_id=" + image_id +
+                "image_id=" + image_id +
                 ", path='" + path + '\'' +
                 ", alternative='" + alternative + '\'' +
+                ", product=" + product +
                 '}';
-    }
-
-
-    public static class ProductImagePK implements Serializable {
-        private long product_id;
-        private long image_id;
-
-        public ProductImagePK() {
-        }
-
-        public ProductImagePK(long product_id, long image_id) {
-            this.product_id = product_id;
-            this.image_id = image_id;
-        }
-
-        public long getProduct_id() {
-            return product_id;
-        }
-
-        public void setProduct_id(long product_id) {
-            this.product_id = product_id;
-        }
-
-        public long getImage_id() {
-            return image_id;
-        }
-
-        public void setImage_id(long image_id) {
-            this.image_id = image_id;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof ProductImagePK)) return false;
-            ProductImagePK that = (ProductImagePK) o;
-            return getProduct_id() == that.getProduct_id() && getImage_id() == that.getImage_id();
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(getProduct_id(), getImage_id());
-        }
-
-        @Override
-        public String toString() {
-            return "ProductImagePK{" +
-                    "product_id=" + product_id +
-                    ", image_id=" + image_id +
-                    '}';
-        }
     }
 }

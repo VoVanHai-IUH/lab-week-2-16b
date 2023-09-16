@@ -1,24 +1,27 @@
 package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
-import org.joda.time.DateTime;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private long order_id;
 
     @Column(name = "order_date", nullable = false)
-    private DateTime orderDate;
+    private LocalDateTime orderDate;
 
     @ManyToOne
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
     @ManyToOne
+    @JoinColumn(name = "cust_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order")
@@ -27,23 +30,27 @@ public class Order {
     public Order() {
     }
 
-    public Order(Employee employee, Customer customer, List<OrderDetail> orderDetails) {
-        this.orderDate = DateTime.now();
+    public Order(long order_id, LocalDateTime orderDate, Employee employee, Customer customer) {
+        this.order_id = order_id;
+        this.orderDate = orderDate;
         this.employee = employee;
         this.customer = customer;
-        this.orderDetails = orderDetails;
     }
 
     public long getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(long id) {
-        this.order_id = id;
+    public void setOrder_id(long order_id) {
+        this.order_id = order_id;
     }
 
-    public DateTime getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Employee getEmployee() {
@@ -73,7 +80,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + order_id +
+                "order_id=" + order_id +
                 ", orderDate=" + orderDate +
                 ", employee=" + employee +
                 ", customer=" + customer +

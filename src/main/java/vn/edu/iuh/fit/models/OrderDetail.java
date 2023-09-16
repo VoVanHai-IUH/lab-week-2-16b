@@ -1,13 +1,12 @@
 package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
-import vn.edu.iuh.fit.pks.OrderDetailPK;
 
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
-    @EmbeddedId
-    private OrderDetailPK pk;
+    /* @EmbeddedId
+     private OrderDetailPK pk;*/
     @Column(name = "quantity", nullable = false)
     private double quantity;
     @Column(name = "price", nullable = false)
@@ -15,16 +14,19 @@ public class OrderDetail {
     @Column(name = "note", length = 255, nullable = true)
     private String note;
 
+    @Id
     @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
-    @OneToOne
+    @Id
+    @JoinColumn(name = "product_id")
+    @ManyToOne
     private Product product;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(OrderDetailPK pk, double quantity, double price, String note, Order order, Product product) {
-        this.pk = pk;
+    public OrderDetail(double quantity, double price, String note, Order order, Product product) {
         this.quantity = quantity;
         this.price = price;
         this.note = note;
@@ -32,13 +34,6 @@ public class OrderDetail {
         this.product = product;
     }
 
-    public OrderDetailPK getPk() {
-        return pk;
-    }
-
-    public void setPk(OrderDetailPK pk) {
-        this.pk = pk;
-    }
 
     public double getQuantity() {
         return quantity;
@@ -83,7 +78,6 @@ public class OrderDetail {
     @Override
     public String toString() {
         return "OrderDetail{" +
-                "pk=" + pk +
                 ", quantity=" + quantity +
                 ", price=" + price +
                 ", note='" + note + '\'' +

@@ -29,7 +29,7 @@ public class EmployeeServices {
         Optional<Employee> op = findById(id);
         if (op.isPresent()) {
             Employee employee = op.get();
-            employee.setStatus(EmployeeStatus.IN_ACTIVE);
+            employee.setStatus(EmployeeStatus.TERMINATED);
             return true;
         }
         return false;
@@ -49,7 +49,7 @@ public class EmployeeServices {
         return repository.getAllEmp();
     }
 
-    public List<Order> getOrdersByPeriod(Date from, Date to) {
+    public List<Order> getOrdersByPeriod(long empId, Date from, Date to) {
         //......
         return null;
     }

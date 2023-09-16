@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:4.0.2'
 
     //date time processing
-    implementation 'joda-time:joda-time:2.12.5'
+//    implementation 'joda-time:joda-time:2.12.5'
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")

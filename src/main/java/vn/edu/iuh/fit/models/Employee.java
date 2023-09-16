@@ -1,9 +1,9 @@
 package vn.edu.iuh.fit.models;
 
 import jakarta.persistence.*;
-import org.joda.time.DateTime;
 import vn.edu.iuh.fit.enums.EmployeeStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +11,7 @@ import java.util.Objects;
 @Table(name = "employee")
 @NamedQueries(
         @NamedQuery(name = "Employee.findAll", query = "select e from Employee e where e.status=1")
+//        ,@NamedQuery(name = "Employee.findXXXXXXX", query = "select e from Employee e where????")
         //,...
 )
 public class Employee {
@@ -21,7 +22,7 @@ public class Employee {
     @Column(name = "full_name", length = 150, nullable = false)
     private String fullname;
     @Column(name = "dob", nullable = false)
-    private DateTime dob;
+    private LocalDateTime dob;
     @Column(name = "email", unique = true, length = 150)
     private String email;
     @Column(name = "phone", length = 15, nullable = false)
@@ -32,12 +33,13 @@ public class Employee {
     private EmployeeStatus status;
 
     @OneToMany
+    @JoinColumn
     private List<Order> lstOrder;
 
     public Employee() {
     }
 
-    public Employee(String fullname, DateTime dob, String email, String phone, String address, EmployeeStatus status) {
+    public Employee(String fullname, LocalDateTime dob, String email, String phone, String address, EmployeeStatus status) {
         this.fullname = fullname;
         this.dob = dob;
         this.email = email;
@@ -62,11 +64,11 @@ public class Employee {
         this.fullname = fullname;
     }
 
-    public DateTime getDob() {
+    public LocalDateTime getDob() {
         return dob;
     }
 
-    public void setDob(DateTime dob) {
+    public void setDob(LocalDateTime dob) {
         this.dob = dob;
     }
 

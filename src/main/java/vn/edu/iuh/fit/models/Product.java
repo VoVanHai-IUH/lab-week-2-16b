@@ -3,10 +3,16 @@ package vn.edu.iuh.fit.models;
 import jakarta.persistence.*;
 import vn.edu.iuh.fit.enums.ProductStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "product")
+@NamedQueries(value = {
+        @NamedQuery(name = "Product.findAll", query = "select p from Product p where p.status = 1"),
+        @NamedQuery(name = "Product.findById", query = "select p from Product p where p.product_id = 1")
+        //,...1
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +32,12 @@ public class Product {
     private ProductStatus status;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImage> productImageList;
+    @JoinColumn
+    private List<ProductImage> productImageList = new ArrayList<>();
 
-    @OneToMany
-    private List<OrderDetail> orderDetails;
+    @OneToMany(mappedBy = "product")
+    @JoinColumn
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
     public Product() {
     }

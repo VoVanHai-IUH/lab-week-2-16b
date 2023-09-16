@@ -37,7 +37,9 @@ public class EmployeeResources {
 
     @POST
     @Produces("application/json")
+    @Consumes("application/json")
     public Response insert(Employee employee) {
+        //ResponseEntity
         employeeServices.insertEmp(employee);
         return Response.ok(employee).build();
     }
